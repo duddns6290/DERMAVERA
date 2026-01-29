@@ -37,4 +37,14 @@ public class Animal {
         this.age = age;
         this.species = species;
     }
+
+    public static Animal create(User user, String name, Integer age, String species) {
+        Animal animal = new Animal();
+        animal.user = user;
+        animal.name = name;
+        animal.age = age;
+        animal.species = species;
+        return animal;
+    }
+
 }
