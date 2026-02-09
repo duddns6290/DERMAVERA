@@ -7,7 +7,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class DermaveraApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(DermaveraApplication.class, args);
+
+        SpringApplication.run(DermaveraApplication.class, args);
 	}
 
 }
