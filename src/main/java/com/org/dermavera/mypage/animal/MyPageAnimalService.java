@@ -2,7 +2,7 @@ package com.org.dermavera.mypage.animal;
 
 import com.org.dermavera.entity.Animal;
 import com.org.dermavera.entity.User;
-import com.org.dermavera.mypage.UserRepository;
+import com.org.dermavera.repository.UserRepository;
 import com.org.dermavera.mypage.animal.dto.AnimalRequest;
 import com.org.dermavera.mypage.animal.dto.AnimalResponse;
 import jakarta.persistence.*;

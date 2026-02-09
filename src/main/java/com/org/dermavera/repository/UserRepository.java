@@ -16,4 +16,10 @@ public interface UserRepository extends JpaRepository<User, Long> {
             SocialType provider,
             String providerId
     );
+
+    default User getTestUser() {
+        return findById(1L)
+                .orElseThrow(() -> new IllegalStateException("테스트 유저가 없습니다."));
+
+    }
 }
