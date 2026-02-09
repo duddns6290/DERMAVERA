@@ -37,6 +37,10 @@ out/
 .vscode/
 
 ## env 파일##
+<<<<<<< HEAD
 .env
 
 .cmd
+=======
+.env
+>>>>>>> origin/main
