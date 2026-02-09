@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-<<<<<<< HEAD
 @Table(
         name = "users",
         uniqueConstraints = {
@@ -18,11 +17,6 @@ import lombok.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
-=======
-@Table(name = "users")
-@Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
->>>>>>> origin/main
 public class User {
 
     @Id
@@ -30,7 +24,6 @@ public class User {
     @Column(name = "user_pk")
     private Long userPk;
 
-<<<<<<< HEAD
     // 일반 로그인 ID (소셜 로그인 시 NULL 가능)
     @Column(name = "user_id", unique = true)
     private String userId;
@@ -50,14 +43,4 @@ public class User {
     // 카카오에서 내려주는 고유 ID
     @Column(name = "provider_id", length = 100)
     private String providerId;
-=======
-    @Column(name = "user_id", nullable = false, unique = true)
-    private String userId;
-
-    @Column(name = "user_name")
-    private String username;
-
-    private String password;
-    private String provider;
->>>>>>> origin/main
 }
