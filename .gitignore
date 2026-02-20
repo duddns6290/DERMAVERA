@@ -67,11 +67,11 @@ htmlcov/
 # ========================
 # Model / Artifacts
 # ========================
-artifacts/*.pt
-artifacts/*.pth
-artifacts/*.ckpt
-artifacts/*.onnx
-artifacts/*.safetensors
+skin-ai/artifacts/*.pt
+skin-ai/artifacts/*.pth
+skin-ai/artifacts/*.ckpt
+skin-ai/artifacts/*.onnx
+skin-ai/artifacts/*.safetensors
 
 # HuggingFace / cache
 .cache/
