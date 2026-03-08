@@ -23,6 +23,7 @@ public class Diagnosis {
     @Column
     private String status;
 
+    @Column
     private Double score;
 
     @Column
@@ -30,6 +31,15 @@ public class Diagnosis {
 
     @Column(name = "created_date", insertable = false, updatable = false)
     private LocalDateTime createdDate;
+
+    public static Diagnosis create(Animal animal, String status, Double score, String image) {
+        Diagnosis d = new Diagnosis();
+        d.animal = animal;
+        d.status = status;
+        d.score = score;
+        d.image = image;
+        return d;
+    }
 
     public void update(String status, Double score, String image) {
         this.status = status;
