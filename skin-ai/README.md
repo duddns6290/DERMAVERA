@@ -3,6 +3,13 @@
 반려동물 피부 질환 이미지 분류를 위한 AI 추론 서버입니다.
 Spring Boot 기반 DERMAVERA 백엔드와 분리된 Python FastAPI 마이크로서비스입니다.
 
+## 모델 파일 (Git LFS)
+
+이 저장소는 `skin-ai/artifacts/model.pt`를 Git LFS로 관리합니다.
+
+- **처음 clone 한 경우**: `git lfs pull` 실행 후 `skin-ai/artifacts/model.pt`가 내려옵니다.
+- LFS 미설치 시: [Git LFS](https://git-lfs.github.com) 설치 후 `git lfs install` 한 번 실행.
+
 ## ⚠️ Python Version Requirement
 
 본 프로젝트는 딥러닝 모델(PyTorch) 사용을 위해
