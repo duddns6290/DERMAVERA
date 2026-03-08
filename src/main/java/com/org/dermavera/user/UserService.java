@@ -12,8 +12,9 @@ public class UserService {
 
     private final UserRepository userRepository;
 
-    public UserResponse getMyInfo(String userId) {
-        User user = userRepository.findByUserId(userId)
+    public UserResponse getMyInfo(String subject) {
+        Long userPk = Long.parseLong(subject);
+        User user = userRepository.findById(userPk)
                 .orElseThrow(() -> new IllegalStateException("사용자를 찾을 수 없습니다."));
 
         return new UserResponse(user);

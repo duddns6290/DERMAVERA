@@ -1,12 +1,10 @@
 package com.org.dermavera.auth;
 
-import com.org.dermavera.auth.dto.KakaoTokenResponse;
 import com.org.dermavera.auth.dto.LoginRequest;
 import com.org.dermavera.auth.dto.SignupRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -32,20 +30,15 @@ public class AuthController {
             return ResponseEntity.status(401).body(e.getMessage());
         }
     }
-
+    // 카카오 로그인 콜백 처리
     @GetMapping("/kakao/callback")
-    public ResponseEntity<String> kakaoCallback(@RequestParam String code) {
-        System.out.println("카카오 인가 코드 = " + code);
-
-        KakaoTokenResponse tokenResponse =
-                authService.getKakaoAccessToken(code);
-
-        String accessToken = tokenResponse.getAccessToken();
-        System.out.println("카카오 access_token = " + accessToken);
-
-        String jwt = authService.kakaoLogin(accessToken);
-
-        return ResponseEntity.ok(jwt);
+    public void kakaoCallback(
+            @RequestParam String code,
+            HttpServletResponse response
+    ) throws IOException {
+        String jwt = authService.kakaoLoginWithCode(code);
+        String frontendUrl = authService.getFrontendUrl();
+        response.sendRedirect(frontendUrl + "/?token=" + jwt);
     }
 
     @GetMapping("/kakao/login")

@@ -40,6 +40,19 @@ public class AuthService {
     @Value("${kakao.client-secret}")
     private String kakaoClientSecret;
 
+    @Value("${app.frontend-url:http://localhost:5173}")
+    private String frontendUrl;
+
+    public String getFrontendUrl() {
+        return frontendUrl;
+    }
+
+    public String kakaoLoginWithCode(String code) {
+        KakaoTokenResponse tokenResponse = getKakaoAccessToken(code);
+        String accessToken = tokenResponse.getAccessToken();
+        return kakaoLogin(accessToken);
+    }
+
     public void signup(SignupRequest request) {
 
         if (userRepository.existsByUserId(request.getUserId())) {
@@ -64,7 +77,7 @@ public class AuthService {
             throw new RuntimeException("비밀번호 불일치");
         }
 
-        return jwtTokenProvider.createToken(user.getUserId());
+        return jwtTokenProvider.createToken(user.getUserPk().toString());
     }
 
     public KakaoTokenResponse getKakaoAccessToken(String code) {
@@ -101,16 +114,23 @@ public class AuthService {
         KakaoUserResponse userInfo = getKakaoUserInfo(accessToken);
 
         String kakaoId = String.valueOf(userInfo.getId());
-        String nickname = userInfo.getKakaoAccount()
-                .getProfile()
-                .getNickname();
+        String nickname = null;
+        if (userInfo.getKakaoAccount() != null && userInfo.getKakaoAccount().getProfile() != null) {
+            nickname = userInfo.getKakaoAccount().getProfile().getNickname();
+        }
+        if (nickname == null || nickname.isBlank()) {
+            nickname = userInfo.getKakaoAccount() != null && userInfo.getKakaoAccount().getEmail() != null
+                    ? userInfo.getKakaoAccount().getEmail()
+                    : "카카오유저";
+        }
+        final String userName = nickname;
 
         User user = userRepository
                 .findByProviderAndProviderId(SocialType.KAKAO, kakaoId)
                 .orElseGet(() -> {
 
                     User newUser = User.builder()
-                            .userName(nickname)
+                            .userName(userName)
                             .provider(SocialType.KAKAO)
                             .providerId(kakaoId)
                             .build();
