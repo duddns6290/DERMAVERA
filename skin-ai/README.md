@@ -151,6 +151,33 @@ MAX_IMAGE_MB=10
 Spring Boot 서버는 WebClient를 통해
 /v1/diagnose 엔드포인트를 호출하여 추론 결과를 수신합니다.
 
+## 🛠 트러블슈팅
+
+### Spring Boot ↔ FastAPI 이미지 전송 시 Content-Type 누락 문제
+
+반려동물 피부 진단 기능 구현 과정에서 Spring Boot 서버와 FastAPI AI 서버를 연동하였으나,
+이미지 전송 후 AI 서버가 정상적으로 응답하지 않는 문제가 발생하였습니다.
+
+**원인**
+
+multipart 요청으로 전달되는 이미지의 Content-Type 정보가 올바르게 전달되지 않아
+FastAPI 서버에서 요청을 처리하지 못하고 있었습니다.
+
+구체적으로는 `MultipartFile.getContentType()`이 `null`이거나 비어 있을 경우,
+PNG 파일임에도 `image/jpeg`로 잘못 지정되어 전송되었고,
+FastAPI 서버에서 **422 Unprocessable Entity** 오류가 반환되었습니다.
+
+**해결**
+
+파일 확장자를 기반으로 Content-Type을 보완하는 로직을 추가하여 해결하였습니다.
+`getContentType()`이 유효하지 않은 경우 확장자(`.png`, `.jpg` 등)를 확인하여
+올바른 MIME 타입을 명시적으로 지정한 뒤 전송하도록 수정하였습니다.
+
+**교훈**
+
+서로 다른 서버 간 통신에서는 API 호출 자체보다
+데이터 형식과 통신 규약을 정확하게 맞추는 것이 중요하다는 점을 배울 수 있었습니다.
+
 ## 📖 Swagger Docs
 
 서버 실행 후 접속:
